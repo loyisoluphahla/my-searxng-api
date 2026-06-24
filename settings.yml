@@ -1,0 +1,11 @@
+use_default_settings: true
+server:
+  port: 8080
+  bind_address: "0.0.0.0"
+  secret_key: "Luphahla_AI"
+search:
+  formats:
+    - html
+    - json  # This explicitly opens the JSON API endpoint for Lovable
+ui:
+  static_use_hash: true
