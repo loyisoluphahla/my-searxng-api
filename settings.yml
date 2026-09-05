@@ -1,10 +1,11 @@
 use_default_settings:
   engines:
     keep_only:
+      - google
+      - bing
       - brave
       - duckduckgo
       - mojeek
-      - qwant
       - wikipedia
 
 general:
@@ -14,11 +15,23 @@ general:
 
 search:
   safe_search: 1
-  autocomplete: "duckduckgo"
+  autocomplete: "google"
   default_lang: "en"
+
   formats:
     - html
     - json
+
+  ban_time_on_fail: 5
+  max_ban_time_on_fail: 120
+
+  suspended_times:
+    SearxEngineAccessDenied: 300
+    SearxEngineCaptcha: 1800
+    SearxEngineTooManyRequests: 300
+    cf_SearxEngineCaptcha: 86400
+    cf_SearxEngineAccessDenied: 86400
+    recaptcha_SearxEngineCaptcha: 86400
 
 server:
   port: 8080
@@ -26,15 +39,27 @@ server:
   secret_key: "${SEARXNG_SECRET}"
   limiter: false
   image_proxy: false
+  public_instance: true
 
 outgoing:
   request_timeout: 5.0
   max_request_timeout: 10.0
-  pool_connections: 30
+  pool_connections: 20
   pool_maxsize: 10
   enable_http2: true
 
 engines:
+
+  - name: google
+    disabled: false
+    timeout: 5.0
+    display_error_messages: false
+
+  - name: bing
+    disabled: false
+    timeout: 5.0
+    display_error_messages: false
+
   - name: brave
     disabled: false
     timeout: 5.0
@@ -46,11 +71,6 @@ engines:
     display_error_messages: false
 
   - name: mojeek
-    disabled: false
-    timeout: 5.0
-    display_error_messages: false
-
-  - name: qwant
     disabled: false
     timeout: 5.0
     display_error_messages: false
