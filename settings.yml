@@ -1,27 +1,93 @@
 # SearXNG configuration
-
 use_default_settings: true
 
 server:
   port: 8080
   bind_address: "0.0.0.0"
-  secret_key: "super_secret_key_change_me_in_production"
+  secret_key: "REPLACE_WITH_A_LONG_RANDOM_STRING_MIN_32_CHARS"
+  limiter: false          # turn OFF the limiter for API use
   real_ip_header: "X-Forwarded-For"
   num_proxies: 1
 
+# ------------------------------------------------------------------
+# Network / HTTP behaviour
+# ------------------------------------------------------------------
+outgoing:
+  # Engine request timeouts (raise a bit so slow engines don't false-fail)
+  request_timeout: 8.0
+  max_request_timeout: 15.0
+  pool_connections: 100
+  pool_maxsize: 20
+
+  # Rotate a pool of real-looking User-Agents so engines don't block us
+  useragent_suffix: ""
+  pool_limit: 30
+  using_tor_proxy: false   # <-- we are NOT routing via Tor anymore
+  # Uncomment if you use a normal (non-Tor) HTTP proxy instead:
+  # proxies:
+  #   http:  http://127.0.0.1:8080
+  #   https: http://127.0.0.1:8080
+
+# Turn OFF safe search and clear autocomplete defaults
 search:
   safe_search: 0
   autocomplete: ""
+  formats:
+    - html
+    - json          # required if you consume this as a search API
 
-# Route all outgoing engine queries through the local Tor SOCKS proxy
-proxies:
-  all: socks5h://127.0.0.1:9050
-
-# Optional: Tweak engines if needed
+# ------------------------------------------------------------------
+# Engine overrides
+# ------------------------------------------------------------------
 engines:
+  # --- Core web engines (keep these green) ---
+  - name: google
+    engine: google
+    shortcut: g
+    disabled: false
+  - name: bing
+    engine: bing
+    shortcut: b
+    disabled: false
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+    disabled: false
+  - name: brave
+    engine: brave
+    shortcut: br
+    disabled: false
+
+  # --- Reference / knowledge (these are reliable) ---
   - name: wikipedia
     engine: wikipedia
     shortcut: wp
+    disabled: false
   - name: wikidata
     engine: wikidata
     shortcut: wd
+    disabled: false
+
+  # --- Engines that are chronically dead/blocked -> turn OFF ---
+  - name: google images
+    engine: google_images
+    disabled: true
+  - name: qwant
+    engine: qwant
+    disabled: true
+  - name: startpage
+    engine: startpage
+    disabled: true
+
+# Optional: only load the engines you actually want for the API.
+# If you ONLY want web search + wikipedia, uncomment the block below
+# and comment out everything under "engines:" except wikipedia/wikidata.
+# use_default_settings:
+#   engines:
+#     keep_only:
+#       - google
+#       - bing
+#       - duckduckgo
+#       - brave
+#       - wikipedia
+#       - wikidata
