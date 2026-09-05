@@ -1,7 +1,6 @@
 FROM searxng/searxng:latest
 
-# Copy our custom settings into the container
 COPY settings.yml /etc/searxng/settings.yml
+COPY limiter.toml /etc/searxng/limiter.toml
 
-# Expose the default port
 EXPOSE 8080
