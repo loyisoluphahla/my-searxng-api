@@ -1,4 +1,4 @@
-# SearXNG limiter configuration
+# SearXNG bot detection (only active if server.limiter = true)
 [botdetection]
-ip_limit = 100
+ip_limit = 200
 block_time = 3600
