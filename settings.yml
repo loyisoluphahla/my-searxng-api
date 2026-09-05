@@ -1,12 +1,4 @@
-use_default_settings:
-  engines:
-    keep_only:
-      - google
-      - bing
-      - brave
-      - duckduckgo
-      - mojeek
-      - wikipedia
+use_default_settings: true
 
 general:
   debug: false
@@ -49,35 +41,3 @@ outgoing:
   pool_connections: 20
   pool_maxsize: 10
   enable_http2: true
-
-engines:
-
-  - name: google
-    disabled: false
-    timeout: 5.0
-    display_error_messages: false
-
-  - name: bing
-    disabled: false
-    timeout: 5.0
-    display_error_messages: false
-
-  - name: brave
-    disabled: false
-    timeout: 5.0
-    display_error_messages: false
-
-  - name: duckduckgo
-    disabled: false
-    timeout: 5.0
-    display_error_messages: false
-
-  - name: mojeek
-    disabled: false
-    timeout: 5.0
-    display_error_messages: false
-
-  - name: wikipedia
-    disabled: false
-    timeout: 5.0
-    display_error_messages: false
