@@ -1,0 +1,4 @@
+# SearXNG limiter configuration
+[botdetection]
+ip_limit = 100
+block_time = 3600
