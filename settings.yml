@@ -1,11 +1,61 @@
-use_default_settings: true
+use_default_settings:
+  engines:
+    keep_only:
+      - brave
+      - duckduckgo
+      - mojeek
+      - qwant
+      - wikipedia
+
+general:
+  debug: false
+  instance_name: "Luphahla Search"
+  enable_metrics: true
+
+search:
+  safe_search: 1
+  autocomplete: "duckduckgo"
+  default_lang: "en"
+  formats:
+    - html
+    - json
+
 server:
   port: 8080
   bind_address: "0.0.0.0"
-  secret_key: "Luphahla_AI"
-search:
-  formats:
-    - html
-    - json  # This explicitly opens the JSON API endpoint for Lovable
-ui:
-  static_use_hash: true
+  secret_key: "${SEARXNG_SECRET}"
+  limiter: false
+  image_proxy: false
+
+outgoing:
+  request_timeout: 5.0
+  max_request_timeout: 10.0
+  pool_connections: 30
+  pool_maxsize: 10
+  enable_http2: true
+
+engines:
+  - name: brave
+    disabled: false
+    timeout: 5.0
+    display_error_messages: false
+
+  - name: duckduckgo
+    disabled: false
+    timeout: 5.0
+    display_error_messages: false
+
+  - name: mojeek
+    disabled: false
+    timeout: 5.0
+    display_error_messages: false
+
+  - name: qwant
+    disabled: false
+    timeout: 5.0
+    display_error_messages: false
+
+  - name: wikipedia
+    disabled: false
+    timeout: 5.0
+    display_error_messages: false
